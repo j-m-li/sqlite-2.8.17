@@ -1246,7 +1246,7 @@ int TCLSH_MAIN(int argc, char **argv){
     }
     if( Tcl_EvalFile(interp, argv[1])!=TCL_OK ){
       const char *zInfo = Tcl_GetVar(interp, "errorInfo", TCL_GLOBAL_ONLY);
-      if( zInfo==0 ) zInfo = interp->result;
+      if( zInfo==0 ) zInfo = Tcl_GetStringResult(interp);
       fprintf(stderr,"%s: %s\n", *argv, zInfo);
       return TCL_ERROR;
     }
