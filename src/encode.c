@@ -176,6 +176,9 @@ int sqlite_decode_binary(const unsigned char *in, unsigned char *out){
   int i, e;
   unsigned char c;
   e = *(in++);
+  if( e==0 ){
+    return 0;
+  }
   i = 0;
   while( (c = *(in++))!=0 ){
     if( c==1 ){
