@@ -465,14 +465,16 @@ doc:	$(DOC)
 	mv $(DOC) doc
 
 install:	sqlite libsqlite.la sqlite.h
-	$(INSTALL) -d $(DESTDIR)$(exec_prefix)/lib
-	$(LTINSTALL) libsqlite.la $(DESTDIR)$(exec_prefix)/lib
+	$(INSTALL) -d $(DESTDIR)$(libdir)
+	$(LTINSTALL) libsqlite.la $(DESTDIR)$(libdir)
+	$(LTINSTALL) libtclsqlite.la $(DESTDIR)$(libdir)/sqlite-__VERSION__
 	$(INSTALL) -d $(DESTDIR)$(exec_prefix)/bin
 	$(LTINSTALL) sqlite $(DESTDIR)$(exec_prefix)/bin
+	$(LTINSTALL) tclsqlite $(DESTDIR)$(exec_prefix)/bin
 	$(INSTALL) -d $(DESTDIR)$(prefix)/include
 	$(INSTALL) -m 0644 sqlite.h $(DESTDIR)$(prefix)/include
-	$(INSTALL) -d $(DESTDIR)$(exec_prefix)/lib/pkgconfig; 
-	$(INSTALL) -m 0644 sqlite.pc $(DESTDIR)$(exec_prefix)/lib/pkgconfig; 
+	$(INSTALL) -d $(DESTDIR)$(libdir)/pkgconfig; 
+	$(INSTALL) -m 0644 sqlite.pc $(DESTDIR)$(libdir)/pkgconfig; 
 
 clean:	
 	rm -f *.lo *.la *.o sqlite@TARGET_EXEEXT@ libsqlite.la sqlite.h opcodes.*
