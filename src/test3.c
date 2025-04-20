@@ -534,7 +534,7 @@ static int btree_cursor(
     Tcl_AppendResult(interp, errorName(rc), 0);
     return TCL_ERROR;
   }
-  sprintf(zBuf,"0x%x", (int)pCur);
+  sprintf(zBuf,"%p", pCur);
   Tcl_AppendResult(interp, zBuf, 0);
   return SQLITE_OK;
 }

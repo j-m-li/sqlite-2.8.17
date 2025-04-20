@@ -82,7 +82,7 @@ static int pager_open(
     Tcl_AppendResult(interp, errorName(rc), 0);
     return TCL_ERROR;
   }
-  sprintf(zBuf,"0x%x",(int)pPager);
+  sprintf(zBuf,"%p", pPager);
   Tcl_AppendResult(interp, zBuf, 0);
   return TCL_OK;
 }
@@ -334,7 +334,7 @@ static int page_get(
     Tcl_AppendResult(interp, errorName(rc), 0);
     return TCL_ERROR;
   }
-  sprintf(zBuf,"0x%x",(int)pPage);
+  sprintf(zBuf,"%p", pPage);
   Tcl_AppendResult(interp, zBuf, 0);
   return TCL_OK;
 }
@@ -364,7 +364,7 @@ static int page_lookup(
   if( Tcl_GetInt(interp, argv[2], &pgno) ) return TCL_ERROR;
   pPage = sqlitepager_lookup(pPager, pgno);
   if( pPage ){
-    sprintf(zBuf,"0x%x",(int)pPage);
+    sprintf(zBuf,"%p", pPage);
     Tcl_AppendResult(interp, zBuf, 0);
   }
   return TCL_OK;
