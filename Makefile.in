@@ -192,7 +192,7 @@ libsqlite.la:	$(LIBOBJ)
 
 libtclsqlite.la:	tclsqlite.lo libsqlite.la
 	$(LTLINK) -o libtclsqlite.la tclsqlite.lo \
-		libsqlite.la $(LIBTCL) -rpath @exec_prefix@/lib/sqlite \
+		libsqlite.la $(LIBTCL) -rpath @exec_prefix@/lib/sqlite-__VERSION__ \
 		-version-info "8:6:8"
 
 sqlite@TARGET_EXEEXT@:	$(TOP)/src/shell.c libsqlite.la sqlite.h
