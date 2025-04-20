@@ -851,6 +851,7 @@ const char *sqlite_error_string(int rc){
     case SQLITE_FORMAT:     z = "auxiliary database format error";       break;
     case SQLITE_RANGE:      z = "bind index out of range";               break;
     case SQLITE_NOTADB:     z = "file is encrypted or is not a database";break;
+    case SQLITE_V3:         z = "database version mismatch. Try sqlite3";break;
     default:                z = "unknown error";                         break;
   }
   return z;

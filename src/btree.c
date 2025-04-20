@@ -112,6 +112,8 @@ typedef struct FreelistInfo FreelistInfo;
 static const char zMagicHeader[] = 
    "** This file contains an SQLite 2.1 database **";
 #define MAGIC_SIZE (sizeof(zMagicHeader))
+static const char zMagicHeader_V3[] = "SQLite format 3";
+#define MAGIC_SIZE_V3 (sizeof(zMagicHeader_V3))
 
 /*
 ** This is a magic integer also used to test the integrity of the database
@@ -794,6 +796,8 @@ static int lockBtree(Btree *pBt){
     if( strcmp(pP1->zMagic,zMagicHeader)!=0 ||
           (pP1->iMagic!=MAGIC && swab32(pP1->iMagic)!=MAGIC) ){
       rc = SQLITE_NOTADB;
+      if( !strcmp(pP1->zMagic,zMagicHeader_V3) )
+        rc = SQLITE_V3;
       goto page1_init_failed;
     }
     pBt->needSwab = pP1->iMagic!=MAGIC;
