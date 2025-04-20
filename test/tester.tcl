@@ -56,8 +56,10 @@ if {[sqlite -has-codec] && [info command sqlite_orig]==""} {
 # Create a test database
 #
 catch {db close}
-file delete -force test.db
-file delete -force test.db-journal
+#file delete -force test.db
+#file delete -force test.db-journal
+exec rm -fr test.db
+exec rm -fr test.db-journal
 sqlite db ./test.db
 if {[info exists ::SETUP_SQL]} {
   db eval $::SETUP_SQL
