@@ -435,7 +435,7 @@ else
   else 
     LIBS=""
     AC_SEARCH_LIBS(Tcl_Init, dnl
-        tcl8.4 tcl8.3 tcl84 tcl83 tcl,,,$otherlibs)
+        tcl8.6 tcl8.5 tcl8.4 tcl8.3 tcl84 tcl83 tcl,,,$otherlibs)
   fi
   TARGET_TCL_LIBS="$LIBS $otherlibs"
 fi

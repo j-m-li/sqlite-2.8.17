@@ -1231,6 +1231,10 @@ int TCLSH_MAIN(int argc, char **argv){
   Tcl_Interp *interp;
   Tcl_FindExecutable(argv[0]);
   interp = Tcl_CreateInterp();
+  if (Tcl_Init(interp) == TCL_ERROR) {
+      fprintf(stderr,"%s\n",
+	      Tcl_GetVar(interp, "errorInfo", TCL_GLOBAL_ONLY));
+  }
   Libsqlite_Init(interp);
   if( argc>=2 ){
     int i;
