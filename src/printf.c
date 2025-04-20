@@ -647,7 +647,7 @@ struct sgMprintf {
   int  nChar;      /* Length of the string so far */
   int  nTotal;     /* Output size if unconstrained */
   int  nAlloc;     /* Amount of space allocated in zText */
-  void *(*xRealloc)(void*,int);  /* Function used to realloc memory */
+  void *(*xRealloc)(void*,size_t);  /* Function used to realloc memory */
 };
 
 /* 
@@ -688,7 +688,7 @@ static void mout(void *arg, const char *zNewText, int nNewChar){
 ** the consumer.  
 */
 static char *base_vprintf(
-  void *(*xRealloc)(void*,int),   /* Routine to realloc memory. May be NULL */
+  void *(*xRealloc)(void*,size_t),   /* Routine to realloc memory. May be NULL */
   int useInternal,                /* Use internal %-conversions if true */
   char *zInitBuf,                 /* Initially write here, before mallocing */
   int nInitBuf,                   /* Size of zInitBuf[] */
@@ -715,7 +715,7 @@ static char *base_vprintf(
 /*
 ** Realloc that is a real function, not a macro.
 */
-static void *printf_realloc(void *old, int size){
+static void *printf_realloc(void *old, size_t size){
   return sqliteRealloc(old,size);
 }
 
@@ -752,8 +752,7 @@ char *sqlite_mprintf(const char *zFormat, ...){
   char zBuf[200];
 
   va_start(ap,zFormat);
-  z = base_vprintf((void*(*)(void*,int))realloc, 0, 
-                   zBuf, sizeof(zBuf), zFormat, ap);
+  z = base_vprintf(realloc, 0, zBuf, sizeof(zBuf), zFormat, ap);
   va_end(ap);
   return z;
 }
@@ -762,8 +761,7 @@ char *sqlite_mprintf(const char *zFormat, ...){
 */
 char *sqlite_vmprintf(const char *zFormat, va_list ap){
   char zBuf[200];
-  return base_vprintf((void*(*)(void*,int))realloc, 0,
-                      zBuf, sizeof(zBuf), zFormat, ap);
+  return base_vprintf(realloc, 0, zBuf, sizeof(zBuf), zFormat, ap);
 }
 
 /*

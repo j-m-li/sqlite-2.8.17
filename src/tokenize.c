@@ -434,7 +434,7 @@ int sqliteRunParser(Parse *pParse, const char *zSql, char **pzErrMsg){
       }
       case TK_ILLEGAL: {
         sqliteSetNString(pzErrMsg, "unrecognized token: \"", -1, 
-           pParse->sLastToken.z, pParse->sLastToken.n, "\"", 1, 0);
+           pParse->sLastToken.z, pParse->sLastToken.n, "\"", 1, (char*)0);
         nErr++;
         goto abort_parse;
       }

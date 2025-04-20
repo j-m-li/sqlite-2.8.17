@@ -48,7 +48,7 @@ void sqliteAttach(Parse *pParse, Token *pFilename, Token *pDbname, Token *pKey){
   }
 
   zFile = 0;
-  sqliteSetNString(&zFile, pFilename->z, pFilename->n, 0);
+  sqliteSetNString(&zFile, pFilename->z, pFilename->n, (char*)0);
   if( zFile==0 ) return;
   sqliteDequote(zFile);
 #ifndef SQLITE_OMIT_AUTHORIZATION
@@ -59,7 +59,7 @@ void sqliteAttach(Parse *pParse, Token *pFilename, Token *pDbname, Token *pKey){
 #endif /* SQLITE_OMIT_AUTHORIZATION */
 
   zName = 0;
-  sqliteSetNString(&zName, pDbname->z, pDbname->n, 0);
+  sqliteSetNString(&zName, pDbname->z, pDbname->n, (char*)0);
   if( zName==0 ) return;
   sqliteDequote(zName);
   for(i=0; i<db->nDb; i++){

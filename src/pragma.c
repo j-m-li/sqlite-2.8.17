@@ -167,7 +167,7 @@ void sqlitePragma(Parse *pParse, Token *pLeft, Token *pRight, int minusFlag){
   sqliteDequote(zLeft);
   if( minusFlag ){
     zRight = 0;
-    sqliteSetNString(&zRight, "-", 1, pRight->z, pRight->n, 0);
+    sqliteSetNString(&zRight, "-", 1, pRight->z, pRight->n, (char*)0);
   }else{
     zRight = sqliteStrNDup(pRight->z, pRight->n);
     sqliteDequote(zRight);

@@ -559,7 +559,7 @@ void sqliteAddColumn(Parse *pParse, Token *pName){
   char *z = 0;
   Column *pCol;
   if( (p = pParse->pNewTable)==0 ) return;
-  sqliteSetNString(&z, pName->z, pName->n, 0);
+  sqliteSetNString(&z, pName->z, pName->n, (char*)0);
   if( z==0 ) return;
   sqliteDequote(z);
   for(i=0; i<p->nCol; i++){
@@ -617,7 +617,7 @@ void sqliteAddColumnType(Parse *pParse, Token *pFirst, Token *pLast){
   pCol = &p->aCol[i];
   pz = &pCol->zType;
   n = pLast->n + Addr(pLast->z) - Addr(pFirst->z);
-  sqliteSetNString(pz, pFirst->z, n, 0);
+  sqliteSetNString(pz, pFirst->z, n, (char*)0);
   z = *pz;
   if( z==0 ) return;
   for(i=j=0; z[i]; i++){
@@ -650,9 +650,9 @@ void sqliteAddDefaultValue(Parse *pParse, Token *pVal, int minusFlag){
   if( i<0 ) return;
   pz = &p->aCol[i].zDflt;
   if( minusFlag ){
-    sqliteSetNString(pz, "-", 1, pVal->z, pVal->n, 0);
+    sqliteSetNString(pz, "-", 1, pVal->z, pVal->n, (char*)0);
   }else{
-    sqliteSetNString(pz, pVal->z, pVal->n, 0);
+    sqliteSetNString(pz, pVal->z, pVal->n, (char*)0);
   }
   sqliteDequote(*pz);
 }
@@ -1856,7 +1856,7 @@ IdList *sqliteIdListAppend(IdList *pList, Token *pToken){
   memset(&pList->a[pList->nId], 0, sizeof(pList->a[0]));
   if( pToken ){
     char **pz = &pList->a[pList->nId].zName;
-    sqliteSetNString(pz, pToken->z, pToken->n, 0);
+    sqliteSetNString(pz, pToken->z, pToken->n, (char*)0);
     if( *pz==0 ){
       sqliteIdListDelete(pList);
       return 0;
@@ -1921,7 +1921,7 @@ SrcList *sqliteSrcListAppend(SrcList *pList, Token *pTable, Token *pDatabase){
   }
   if( pTable ){
     char **pz = &pList->a[pList->nSrc].zName;
-    sqliteSetNString(pz, pTable->z, pTable->n, 0);
+    sqliteSetNString(pz, pTable->z, pTable->n, (char*)0);
     if( *pz==0 ){
       sqliteSrcListDelete(pList);
       return 0;
@@ -1931,7 +1931,7 @@ SrcList *sqliteSrcListAppend(SrcList *pList, Token *pTable, Token *pDatabase){
   }
   if( pDatabase ){
     char **pz = &pList->a[pList->nSrc].zDatabase;
-    sqliteSetNString(pz, pDatabase->z, pDatabase->n, 0);
+    sqliteSetNString(pz, pDatabase->z, pDatabase->n, (char*)0);
     if( *pz==0 ){
       sqliteSrcListDelete(pList);
       return 0;
@@ -1962,7 +1962,7 @@ void sqliteSrcListAssignCursors(Parse *pParse, SrcList *pList){
 void sqliteSrcListAddAlias(SrcList *pList, Token *pToken){
   if( pList && pList->nSrc>0 ){
     int i = pList->nSrc - 1;
-    sqliteSetNString(&pList->a[i].zAlias, pToken->z, pToken->n, 0);
+    sqliteSetNString(&pList->a[i].zAlias, pToken->z, pToken->n, (char*)0);
     sqliteDequote(pList->a[i].zAlias);
   }
 }

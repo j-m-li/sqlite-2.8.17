@@ -121,7 +121,7 @@ int sqliteJoinType(Parse *pParse, Token *pA, Token *pB, Token *pC){
     if( pB==0 ){ pB = &dummy; zSp1 = 0; }
     if( pC==0 ){ pC = &dummy; zSp2 = 0; }
     sqliteSetNString(&pParse->zErrMsg, "unknown or unsupported join type: ", 0,
-       pA->z, pA->n, zSp1, 1, pB->z, pB->n, zSp2, 1, pC->z, pC->n, 0);
+       pA->z, pA->n, zSp1, 1, pB->z, pB->n, zSp2, 1, pC->z, pC->n, (char*)0);
     pParse->nErr++;
     jointype = JT_INNER;
   }else if( jointype & JT_RIGHT ){
@@ -744,7 +744,7 @@ static void generateColumnNames(
  
         zTab = pTabList->a[j].zAlias;
         if( fullNames || zTab==0 ) zTab = pTab->zName;
-        sqliteSetString(&zName, zTab, ".", zCol, 0);
+        sqliteSetString(&zName, zTab, ".", zCol, (char*)0);
         sqliteVdbeOp3(v, OP_ColumnName, i, p2, zName, P3_DYNAMIC);
       }else{
         sqliteVdbeOp3(v, OP_ColumnName, i, p2, zCol, 0);
@@ -809,19 +809,19 @@ Table *sqliteResultSetOfSelect(Parse *pParse, char *zTabName, Select *pSelect){
     }else if( (p=pEList->a[i].pExpr)->op==TK_DOT 
                && (pR=p->pRight)!=0 && pR->token.z && pR->token.z[0] ){
       int cnt;
-      sqliteSetNString(&aCol[i].zName, pR->token.z, pR->token.n, 0);
+      sqliteSetNString(&aCol[i].zName, pR->token.z, pR->token.n, (char*)0);
       for(j=cnt=0; j<i; j++){
         if( sqliteStrICmp(aCol[j].zName, aCol[i].zName)==0 ){
           int n;
           char zBuf[30];
           sprintf(zBuf,"_%d",++cnt);
           n = strlen(zBuf);
-          sqliteSetNString(&aCol[i].zName, pR->token.z, pR->token.n, zBuf, n,0);
+          sqliteSetNString(&aCol[i].zName, pR->token.z, pR->token.n, zBuf, n, (char*)0);
           j = -1;
         }
       }
     }else if( p->span.z && p->span.z[0] ){
-      sqliteSetNString(&pTab->aCol[i].zName, p->span.z, p->span.n, 0);
+      sqliteSetNString(&pTab->aCol[i].zName, p->span.z, p->span.n, (char*)0);
     }else{
       char zBuf[30];
       sprintf(zBuf, "column%d", i+1);
@@ -879,7 +879,7 @@ static int fillInColumnList(Parse *pParse, Select *p){
         char zFakeName[60];
         sprintf(zFakeName, "sqlite_subquery_%p_",
            (void*)pTabList->a[i].pSelect);
-        sqliteSetString(&pTabList->a[i].zAlias, zFakeName, 0);
+        sqliteSetString(&pTabList->a[i].zAlias, zFakeName, (char*)0);
       }
       pTabList->a[i].pTab = pTab = 
         sqliteResultSetOfSelect(pParse, pTabList->a[i].zAlias,
@@ -1003,7 +1003,7 @@ static int fillInColumnList(Parse *pParse, Select *p){
               pLeft->token.z = zTabName;
               pLeft->token.n = strlen(zTabName);
               pLeft->token.dyn = 0;
-              sqliteSetString((char**)&pExpr->span.z, zTabName, ".", zName, 0);
+              sqliteSetString((char**)&pExpr->span.z, zTabName, ".", zName, (char*)0);
               pExpr->span.n = strlen(pExpr->span.z);
               pExpr->span.dyn = 1;
               pExpr->token.z = 0;

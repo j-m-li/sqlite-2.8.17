@@ -26,7 +26,7 @@ BCC = @BUILD_CC@ @BUILD_CFLAGS@
 # will run on the target platform.  (BCC and TCC are usually the
 # same unless your are cross-compiling.)
 #
-TCC = @TARGET_CC@ @TARGET_CFLAGS@ -I. -I${TOP}/src
+TCC = @TARGET_CC@ @TARGET_CFLAGS@ -I. -I${TOP}/src -DTHREADSAFE=1
 
 # Some standard variables and programs
 #
@@ -184,7 +184,7 @@ Makefile: $(TOP)/Makefile.in
 # of the most recently modified source code file
 #
 last_change:	$(SRC)
-	cat $(SRC) | grep '$$Id: ' | sort +4 | tail -1 \
+	cat $(SRC) | grep '$$Id: ' | sort +4 | tail -n 1 \
           | awk '{print $$5,$$6}' >last_change
 
 libsqlite.la:	$(LIBOBJ)
@@ -365,7 +365,7 @@ tclsqlite:	tclsqlite-sh.lo libsqlite.la
 testfixture@TARGET_EXEEXT@:	$(TOP)/src/tclsqlite.c libtclsqlite.la libsqlite.la $(TESTSRC)
 	$(LTLINK) $(TCL_FLAGS) -DTCLSH=1 -DSQLITE_TEST=1\
                 -o testfixture $(TESTSRC) $(TOP)/src/tclsqlite.c \
-		libtclsqlite.la libsqlite.la $(LIBTCL)
+		libtclsqlite.la libsqlite.la $(LIBTCL) -lpthread
 
 fulltest:	testfixture@TARGET_EXEEXT@ sqlite@TARGET_EXEEXT@
 	./testfixture $(TOP)/test/all.test

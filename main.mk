@@ -145,7 +145,7 @@ all:	sqlite.h config.h libsqlite.a sqlite$(EXE)
 # of the most recently modified source code file
 #
 last_change:	$(SRC)
-	cat $(SRC) | grep '$$Id: ' | sort +4 | tail -1 \
+	cat $(SRC) | grep '$$Id: ' | sort +4 | tail -n 1 \
           | awk '{print $$5,$$6}' >last_change
 
 libsqlite.a:	$(LIBOBJ)
