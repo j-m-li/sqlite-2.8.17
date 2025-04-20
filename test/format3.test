@@ -686,7 +686,7 @@ do_test format3-11.2 {
   execsql {SELECT '0'==0.0}
 } {1}
 do_test format3-11.3 {
-  execsql {SELECT '123456789012345678901'=='123456789012345678900'}
+  execsql {SELECT '1234567890123456789012'=='1234567890123456789011'}
 } {1}
 do_test format3-11.4 {
   execsql {

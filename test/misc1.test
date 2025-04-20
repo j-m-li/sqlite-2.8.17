@@ -335,7 +335,7 @@ do_test misc1-12.2 {
   execsql {SELECT '0'==0.0}
 } {1}
 do_test misc1-12.3 {
-  execsql {SELECT '12345678901234567890'=='12345678901234567891'}
+  execsql {SELECT '1234567890123456789012'=='1234567890123456789011'}
 } {0}
 do_test misc1-12.4 {
   execsql {
