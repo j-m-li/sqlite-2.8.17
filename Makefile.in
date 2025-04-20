@@ -141,6 +141,7 @@ SRC = \
 # Source code to the test files.
 #
 TESTSRC = \
+  $(TOP)/src/test-util.c \
   $(TOP)/src/btree.c \
   $(TOP)/src/func.c \
   $(TOP)/src/os.c \
